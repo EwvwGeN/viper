@@ -2120,6 +2120,21 @@ func (v *Viper) AllKeys() []string {
 	return a
 }
 
+// StructKeys return all strcut keys
+// Nested keys are returned with a v.keyDelim separator.
+func StructKeys(rawVal any) ([]string, error) {
+	return v.StructKeys(rawVal)
+}
+
+func (v *Viper) StructKeys(rawVal any) ([]string, error) {
+
+	structKeys, err := v.decodeStructKeys(rawVal)
+	if err != nil {
+		return nil, err
+	}
+	return structKeys, nil
+}
+
 // flattenAndMergeMap recursively flattens the given map into a map[string]bool
 // of key paths (used as a set, easier to manipulate than a []string):
 //   - each path is merged into a single key string, delimited with v.keyDelim
